@@ -7,8 +7,8 @@ import { Sermon, getSermons } from '../../../lib/api';
 
 const WEB_BASE_URL =
   process.env.NEXT_PUBLIC_WEB_BASE_URL ||
-  'https://websermonabsensi.vercel.app';
- // sesuaikan IP/domain
+  (typeof window !== 'undefined' ? window.location.origin : '');
+
 
 export default function AdminSermonsPage() {
   const [data, setData] = useState<Sermon[]>([]);
