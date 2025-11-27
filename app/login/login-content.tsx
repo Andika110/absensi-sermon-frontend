@@ -3,6 +3,8 @@
 
 import { useSearchParams, useRouter } from 'next/navigation';
 import { FormEvent, useState } from 'react';
+import { login } from '../../lib/api';
+
 
 export function LoginContent() {
   const searchParams = useSearchParams();
@@ -18,24 +20,22 @@ export function LoginContent() {
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      // TODO: ganti dengan pemanggilan API login yang sudah kamu punya
-      // contoh:
-      // const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/login`, {...})
-      // const data = await res.json();
-      // simpan token di cookie/localStorage, dll.
+  e.preventDefault();
+  setError(null);
+  setLoading(true);
+  try {
+    // panggil backend, simpan token ke localStorage (diatur di api.ts)
+    await login(username, password);
 
-      // sementara: langsung redirect (untuk test UI di Vercel)
-      router.push(redirectTo);
-    } catch (err: any) {
-      setError(err.message || 'Gagal login');
-    } finally {
-      setLoading(false);
-    }
+    // kalau sukses, redirect
+    router.push(redirectTo);
+  } catch (err: any) {
+    setError(err.message || 'Gagal login');
+  } finally {
+    setLoading(false);
   }
+}
+
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-50">

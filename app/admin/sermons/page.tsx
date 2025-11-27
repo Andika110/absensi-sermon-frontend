@@ -5,7 +5,10 @@ import Link from 'next/link';
 import QRCode from 'react-qr-code';
 import { Sermon, getSermons } from '../../../lib/api';
 
-const WEB_BASE_URL = 'http://192.168.22.229:3001'; // sesuaikan IP/domain
+const WEB_BASE_URL =
+  process.env.NEXT_PUBLIC_WEB_BASE_URL ||
+  'https://websermonabsensi.vercel.app';
+ // sesuaikan IP/domain
 
 export default function AdminSermonsPage() {
   const [data, setData] = useState<Sermon[]>([]);
