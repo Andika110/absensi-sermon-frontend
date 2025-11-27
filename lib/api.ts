@@ -1,5 +1,5 @@
 const BACKEND_BASE_URL =
-  process.env.NEXT_PUBLIC_BACKEND_BASE_URL || 'http://192.168.10.29:3000/api';
+process.env.NEXT_PUBLIC_BACKEND_BASE_URL || 'https://absensi-sermon-backend-production.up.railway.app/api';
 
   
 
