@@ -45,7 +45,7 @@ export function CheckinContent() {
 
     const numericId = Number(sermonId);
 
-  getSermonById(numericId)
+getSermonById(numericId)
   .then((data) => setSermon(data))
   .catch(() => { /* ... */ })
   .finally(() => setLoading(false));
@@ -75,7 +75,9 @@ export function CheckinContent() {
         throw new Error(body?.message || 'Gagal check-in');
       }
 
-      setCheckinMsg('✅ Anda sudah tercatat hadir untuk ibadah ini.');
+      setCheckinMsg(
+        '✅ Check-in berhasil! Anda sudah tercatat hadir untuk ibadah ini.'
+      );
     } catch (e: any) {
       setCheckinMsg(e.message || 'Terjadi kesalahan saat check-in.');
     } finally {
@@ -97,49 +99,68 @@ export function CheckinContent() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
-      <div className="max-w-md w-full px-4">
-        <h1 className="text-2xl font-semibold mb-4">Check-in Sermon</h1>
+    <main className="relative min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center overflow-hidden">
+      {/* background gradient */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_#22c55e22,_transparent_55%),radial-gradient(circle_at_bottom,_#0ea5e933,_transparent_60%)]" />
 
-        {loading && (
-          <p className="text-sm text-slate-300">Memuat data sermon...</p>
-        )}
+      <div className="relative max-w-md w-full px-4">
+        <div className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/70 backdrop-blur-xl shadow-xl shadow-slate-950/40 p-6">
+          <h1 className="text-2xl font-semibold mb-4 text-center">
+            Check-in Sermon
+          </h1>
 
-        {!loading && sermon && (
-          <div className="mt-2 text-sm text-slate-200">
-            <p>Judul: {sermon.judul || `Sermon #${sermon.id}`}</p>
-            {sermon.tanggal && (
+          {loading && (
+            <p className="text-sm text-slate-300 text-center">
+              Memuat data sermon...
+            </p>
+          )}
+
+          {!loading && sermon && (
+            <div className="mt-2 text-sm text-slate-200 space-y-1 text-center">
               <p>
-                Waktu:{' '}
-                {new Date(sermon.tanggal).toLocaleString('id-ID', {
-                  weekday: 'short',
-                  day: '2-digit',
-                  month: '2-digit',
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+                <span className="font-medium text-slate-100">Judul:</span>{' '}
+                {sermon.judul || `Sermon #${sermon.id}`}
               </p>
-            )}
-            {sermon.lokasi && <p>Lokasi: {sermon.lokasi}</p>}
-          </div>
-        )}
+              {sermon.tanggal && (
+                <p>
+                  <span className="font-medium text-slate-100">Waktu:</span>{' '}
+                  {new Date(sermon.tanggal).toLocaleString('id-ID', {
+                    weekday: 'short',
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </p>
+              )}
+              {sermon.lokasi && (
+                <p>
+                  <span className="font-medium text-slate-100">Lokasi:</span>{' '}
+                  {sermon.lokasi}
+                </p>
+              )}
+            </div>
+          )}
 
-        <p className="mt-4 text-sm text-slate-300">
-          QR: Sermon ID = {sermonId}
-        </p>
+          <p className="mt-4 text-xs text-slate-400 text-center">
+            QR: Sermon ID = {sermonId}
+          </p>
 
-        <button
-          onClick={handleCheckin}
-          disabled={checkingIn}
-          className="mt-6 w-full rounded-xl bg-emerald-500 py-2 text-sm font-semibold text-slate-950 hover:bg-emerald-400 disabled:bg-emerald-800"
-        >
-          {checkingIn ? 'Memproses...' : 'Check-in sekarang'}
-        </button>
+          <button
+            onClick={handleCheckin}
+            disabled={checkingIn}
+            className="mt-6 w-full rounded-xl bg-emerald-500 py-2.5 text-sm font-semibold text-slate-950 shadow-lg shadow-emerald-500/30 hover:bg-emerald-400 disabled:bg-emerald-800 disabled:cursor-not-allowed transition-colors"
+          >
+            {checkingIn ? 'Memproses...' : 'Check-in sekarang'}
+          </button>
 
-        {checkinMsg && (
-          <p className="mt-3 text-sm text-slate-200">{checkinMsg}</p>
-        )}
+          {checkinMsg && (
+            <div className="mt-4 rounded-xl border border-emerald-400/60 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-200">
+              {checkinMsg}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );
