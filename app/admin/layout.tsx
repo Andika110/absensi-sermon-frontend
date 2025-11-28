@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const adminNav = [
+  { href: '/admin', label: 'Dashboard', icon: '🏠' },
   { href: '/admin/attendance', label: 'Rekap Absensi', icon: '📊' },
   { href: '/admin/sermons', label: 'Jadwal Sermon & QR', icon: '📅' },
   { href: '/admin/sintua', label: 'Data Sintua & Akun', icon: '👤' },
