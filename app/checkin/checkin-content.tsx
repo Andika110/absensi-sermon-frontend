@@ -1,24 +1,35 @@
-// app/checkin/checkin-content.tsx
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-// import komponen/hook lain yang sebelumnya ada di page.tsx
 
 export function CheckinContent() {
   const searchParams = useSearchParams();
 
-  const qr = searchParams.get('qr'); // contoh kalau kamu pakai query ?qr=...
-  // pindahkan semua state, fetch, dan JSX lama di sini.
-  // Misalnya:
+  // Ambil ?sermon_id=... dari URL
+  const sermonId = searchParams.get('sermon_id');
+
+  const hasSermonId = !!sermonId;
 
   return (
     <main className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center">
       <div className="max-w-md w-full px-4">
         <h1 className="text-2xl font-semibold mb-4">Check-in Sermon</h1>
-        <p className="text-sm text-slate-300">
-          QR: {qr || 'Tidak ada QR di URL'}
+
+        <p className="text-sm text-slate-300 mb-4">
+          QR:{' '}
+          {hasSermonId
+            ? `Sermon ID = ${sermonId}`
+            : 'Tidak ada QR di URL'}
         </p>
-        {/* ... sisa tampilan dan logika absensi seperti di versi lokalmu ... */}
+
+        {hasSermonId && (
+          <p className="text-xs text-slate-400">
+            Di sini nanti kamu bisa lanjutkan logika:
+            ambil data sermon {sermonId}, form login / tombol
+            check-in, kirim ke endpoint
+            <code className="mx-1">/api/attendance/self-checkin</code>, dll.
+          </p>
+        )}
       </div>
     </main>
   );
