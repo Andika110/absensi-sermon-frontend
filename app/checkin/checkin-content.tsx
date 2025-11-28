@@ -118,7 +118,7 @@ getSermonById(numericId)
               Check-in Sermon
             </h1>
             <p className="mt-1 text-xs text-slate-400">
-              Tunjukkan layar ini ke petugas pintu setelah berhasil check-in.
+              Tunjukkan layar ini setelah berhasil check-in.
             </p>
           </div>
 
